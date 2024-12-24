@@ -1,12 +1,13 @@
 from flask import Flask
 from flask_cors import CORS
+from .models import board
 import os
 from .db import db, migrate
 
 
 def create_app(config=None):
     app = Flask(__name__)
-
+    CORS(app) 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
 
@@ -19,5 +20,5 @@ def create_app(config=None):
     db.init_app(app)
     migrate.init_app(app, db)
     
-    CORS(app)
+    # CORS(app)
     return app
