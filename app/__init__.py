@@ -2,6 +2,9 @@ from flask import Flask
 from flask_cors import CORS
 import os
 from .db import db, migrate
+from .routes.board_routes import bp as board_bp
+from .routes.card_routes import bp as card_bp
+from .models import board, card
 
 
 def create_app(config=None):
@@ -14,10 +17,12 @@ def create_app(config=None):
         app.config.update(config)
 
     # Initialize app with SQLAlchemy db and Migrate
-
-    # Register Blueprints 
     db.init_app(app)
     migrate.init_app(app, db)
-    
+
+    # Register Blueprints 
+    app.register_blueprint(board_bp)
+    app.register_blueprint(card_bp)
+
     CORS(app)
     return app
