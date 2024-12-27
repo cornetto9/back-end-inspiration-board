@@ -11,8 +11,6 @@ def test_post_card_to_board(client, one_board):
 
     # Assert
     assert response.status_code == 201
-    assert "id" in response_body
-    assert "card_ids" in response_body
     assert response_body == {
         "id": 1,
         "message": "All you can do is try"
