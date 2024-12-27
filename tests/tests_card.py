@@ -16,3 +16,9 @@ def test_post_card_to_board(client, one_board):
         "message": "All you can do is try",
         "likes": 0
     }
+
+#test likes 
+#test delete card
+#test no board
+#test get card
+#test no card 

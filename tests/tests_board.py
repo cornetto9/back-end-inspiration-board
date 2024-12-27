@@ -93,7 +93,7 @@ def test_update_board_not_found(client, one_board):
         "message":"Task id 1 is not found"
     }
 
-def test_delete_all_boards(client, one_task_belongs_to_one_goal, three_tasks):
+def test_delete_all_boards(client, one_board, three_boards):
     # Act
     response = client.delete("/boards")
     response_body = response.get_json()
