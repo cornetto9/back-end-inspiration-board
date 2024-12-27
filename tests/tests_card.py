@@ -13,5 +13,6 @@ def test_post_card_to_board(client, one_board):
     assert response.status_code == 201
     assert response_body == {
         "id": 1,
-        "message": "All you can do is try"
+        "message": "All you can do is try",
+        "likes": 0
     }
