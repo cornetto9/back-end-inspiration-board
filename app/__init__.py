@@ -2,6 +2,8 @@ from flask import Flask
 from flask_cors import CORS
 import os
 from .db import db, migrate
+from .models.board import Board
+from .routes.board_routes import board_routes
 
 
 def create_app(config=None):
@@ -18,6 +20,8 @@ def create_app(config=None):
     # Register Blueprints 
     db.init_app(app)
     migrate.init_app(app, db)
+
+    app.register_blueprint(board_routes)
     
     CORS(app)
     return app
