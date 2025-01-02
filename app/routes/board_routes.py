@@ -1,20 +1,14 @@
 from flask import Blueprint, request
 from app.models.board import Board
-<<<<<<< HEAD
 from app.models.card import Card
 from app.db import db
 from .route_utilities import create_model, validate_model, get_models_with_filters
-=======
-from app.db import db
-from .route_utilities import create_model
->>>>>>> test-izzy
 
 bp = Blueprint("board_bp", __name__, url_prefix="/boards")
 
 @bp.post("")
 def create_board(): 
     request_body = request.get_json()
-<<<<<<< HEAD
     return create_model(Board, request_body)
 
 @bp.get("")
@@ -45,6 +39,3 @@ def create_card_within_board(board_id):
             return {"message": f"Board ID in URL {board_id} must match board_id in request body {request_board_id}"}, 400
     request_body['board_id'] = board.board_id
     return create_model(Card, request_body)
-=======
-    return create_model(Board, request_body)
->>>>>>> test-izzy

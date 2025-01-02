@@ -20,15 +20,10 @@ def create_app(config=None):
     # Initialize app with SQLAlchemy db and Migrate
     db.init_app(app)
     migrate.init_app(app, db)
-<<<<<<< HEAD
 
     # Register Blueprints 
     app.register_blueprint(board_bp)
     app.register_blueprint(card_bp)
 
     CORS(app)
-=======
-    
-    # CORS(app)
->>>>>>> test-izzy
     return app
