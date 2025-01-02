@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 class Board(db.Model):
     board_id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     title: Mapped[str]
+<<<<<<< HEAD
     owner: Mapped[str]
     cards: Mapped[list['Card']] = relationship('Card', back_populates='board')
 
@@ -19,3 +20,6 @@ class Board(db.Model):
     def from_dict(cls, data):
         return Board(title=data['title'], owner=data['owner'])
     
+=======
+    owner: Mapped[str]
+>>>>>>> test-izzy
