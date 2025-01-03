@@ -55,14 +55,30 @@ def client(app):
 
 @pytest.fixture
 def one_board(app):
-    new_board = Board(title="Software Developer",
-                      owner="Homer J Simpson")
+    new_board = Board(title="Software Developer", owner="Homer J Simpson")
     db.session.add(new_board)
     db.session.commit()
 
+# @pytest.fixture
+# def one_card(app):
+#     new_card = Card(message="Build a FullStack App", 
+#                     likes=10)
+#     db.session.add(new_card)
+#     db.session.commit()
+
 @pytest.fixture
-def one_card(app):
-    new_card = Card(message="Build a FullStack App", 
-                    likes=10)
+def one_card(app, one_board):
+    new_card = Card(message="Build a FullStack App", likes_count=10, board_id=1)
     db.session.add(new_card)
+    db.session.commit()
+
+
+@pytest.fixture
+def three_boards(app):
+    boards = [
+        Board(title="Board 1", owner="Owner 1"),
+        Board(title="Board 2", owner="Owner 2"),
+        Board(title="Board 3", owner="Owner 3")
+    ]
+    db.session.add_all(boards)
     db.session.commit()
