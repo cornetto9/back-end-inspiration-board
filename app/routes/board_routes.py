@@ -52,16 +52,3 @@ def delete_board(board_id):
     db.session.commit()
     
     return {"message": f"Board {board_id} and its cards have been deleted"}, 200
-
-@bp.delete("/<board_id>")
-def delete_board(board_id):
-    board = validate_model(Board, board_id)
-    
-    # Delete all cards associated with the board
-    for card in board.cards:
-        db.session.delete(card)
-    
-    db.session.delete(board)
-    db.session.commit()
-    
-    return {"message": f"Board {board_id} and its cards have been deleted"}, 200
