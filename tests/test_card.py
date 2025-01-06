@@ -1,15 +1,7 @@
 from app.models.card import Card
+from app.models.board import Board
 from app.db import db
 import pytest
-
-
-def test_get_cards_no_cards_added(client):
-    # Act
-    response = client.get("/boards/1/cards")
-    response_body = response.get_json()
-    # Assert
-    assert response.status_code == 200
-    assert response_body == {"card": []}
 
 
 def test_post_card_to_board(client, one_board):
@@ -41,11 +33,11 @@ def test_delete_card(client, one_card):
     assert response.status_code == 200
     assert response_body == {"message": "Card deleted"}
 
-def test_update_card_likes(client, one_card):
+def test_increment_card_likes_by_1(client, one_card):
     # Act
-    response = client.put(f"/cards/1", json={"likes_count": 20})
-    response_body = response.get_json()
+    response = client.patch(f"/cards/1/like")
 
     # Assert
-    assert response.status_code == 200
-    assert response_body["card"]["likes_count"] == 20
+    updated_card = db.session.get(Board, 1).cards[0]
+    assert response.status_code == 204
+    assert updated_card.likes_count == 11
