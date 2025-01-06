@@ -39,3 +39,16 @@ def create_card_within_board(board_id):
             return {"message": f"Board ID in URL {board_id} must match board_id in request body {request_board_id}"}, 400
     request_body['board_id'] = board.board_id
     return create_model(Card, request_body)
+
+@bp.delete("/<board_id>")
+def delete_board(board_id):
+    board = validate_model(Board, board_id)
+    
+    # Delete all cards associated with the board
+    for card in board.cards:
+        db.session.delete(card)
+    
+    db.session.delete(board)
+    db.session.commit()
+    
+    return {"message": f"Board {board_id} and its cards have been deleted"}, 200
