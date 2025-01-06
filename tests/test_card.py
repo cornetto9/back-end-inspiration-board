@@ -58,7 +58,7 @@ def test_post_card_to_board_message_missing(client, one_board):
     # Assert
     assert response.status_code == 400
     assert response_body == {"details": "Invalid data"}
-    
+
 def test_delete_card(client, one_card):
     # Act
     response = client.delete(f"/cards/1")
