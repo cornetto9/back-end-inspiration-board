@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, Response
 from app.models.board import Board
 from app.models.card import Card
 from app.db import db
@@ -21,3 +21,13 @@ def update_card_likes(card_id):
     db.session.commit()
     return {"card": card.to_dict()}, 200
 
+@bp.patch("/<card_id>/like")
+def update_likes(card_id):
+    card = validate_model(Card, card_id)
+    if card.likes_count is None:
+        card.likes_count = 1
+    else:
+        card.likes_count += 1
+    
+    db.session.commit()
+    return Response(status=204, mimetype="application/json")
