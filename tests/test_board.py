@@ -105,14 +105,20 @@ def test_create_board_stdout(client):
     assert new_board.title == "Tests always work!"
     assert new_board.owner == "Sonic"
 
-def test_delete_all_boards(client, one_board, three_boards):
+def test_delete_one_board(client, one_board):
     # Act
-    response = client.delete("/boards")
+    response = client.delete("/boards/1")
     response_body = response.get_json()
 
     # Assert
     assert response.status_code == 200
-    assert response_body == {
-        "details": f'All Boards and Cards are successfully deleted'
-    }
-    assert len(db.session.get(Board, 1).cards) == 0
+    assert response_body == {"message": "Board 1 and its cards have been deleted"}
+
+def test_delete_board_with_cards(client, one_board_with_cards):
+    # Act
+    response = client.delete("/boards/1")
+    response_body = response.get_json()
+
+    # Assert
+    assert response.status_code == 200
+    assert response_body == {"message": "Board 1 and its cards have been deleted"}

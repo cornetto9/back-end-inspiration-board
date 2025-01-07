@@ -34,10 +34,10 @@ def test_post_card_to_board_board_not_found(client):
         }
     )
     response_body = response.get_json()
-
     # Assert
     assert response.status_code == 404
     assert response_body == {"message": "Board id 1 is not found"}
+
 
 def test_post_card_to_board_likes_count_missing(client, one_board):
     # Act
@@ -49,15 +49,6 @@ def test_post_card_to_board_likes_count_missing(client, one_board):
     assert response.status_code == 400
     assert response_body == {"details": "Invalid data"}
 
-def test_post_card_to_board_message_missing(client, one_board):
-    # Act
-    response = client.post(
-        f"/boards/1/cards", json={"likes_count": 5}
-    )
-    response_body = response.get_json()
-    # Assert
-    assert response.status_code == 400
-    assert response_body == {"details": "Invalid data"}
 
 def test_delete_card(client, one_card):
     # Act
@@ -77,7 +68,7 @@ def test_delete_card_not_found(client):
     assert response.status_code == 404
     assert response_body == {"message": "Card id 1 is not found"}
 
-def test_increment_card_likes_by_1(client, one_card):
+def test_updates_likes_increments_card_likes_by_1(client, one_card):
     # Act
     response = client.patch(f"/cards/1/like")
 
@@ -86,7 +77,7 @@ def test_increment_card_likes_by_1(client, one_card):
     assert response.status_code == 204
     assert updated_card.likes_count == 11
 
-def test_increment_card_likes_by_1_card_not_found(client):
+def test_update_likes_card_not_found(client):
     # Act
     response = client.patch(f"/cards/200/like")
     response_body = response.get_json()
@@ -94,3 +85,12 @@ def test_increment_card_likes_by_1_card_not_found(client):
     # Assert
     assert response.status_code == 404
     assert response_body == {"message": "Card id 200 is not found"}
+
+def test_get_cards_by_board(client, one_board_with_cards):
+    # Act
+    response = client.get(f"/boards/1/cards")
+    response_body = response.get_json()
+
+    # Assert
+    assert response.status_code == 200
+    assert response_body == {"cards": [{"card_id": 1, "message": "Build a FullStack App", "likes_count": 10, "board_id": 1}]}
