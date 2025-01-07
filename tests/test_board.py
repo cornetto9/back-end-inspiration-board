@@ -28,7 +28,6 @@ def test_get_boards_one_saved_boards(client, one_board):
             }
     }
 
-
 def test_get_all_boards_one_saved_board(client, one_board):
     # Act
     response = client.get("/boards")
@@ -99,7 +98,7 @@ def test_create_board_stdout(client):
             "title": "Tests always work!"
     }
 }
-    new_board = Board.query.get(1)
+    new_board = db.session.get(Board, 1)
     new_board = db.session.get(Board, 1)
     assert new_board
     assert new_board.title == "Tests always work!"
