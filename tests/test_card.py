@@ -1,7 +1,5 @@
-from app.models.card import Card
 from app.models.board import Board
 from app.db import db
-import pytest
 
 
 def test_post_card_to_board(client, one_board):

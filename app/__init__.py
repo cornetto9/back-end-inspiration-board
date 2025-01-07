@@ -17,11 +17,9 @@ def create_app(config=None):
     if config:
         app.config.update(config)
 
-    # Initialize app with SQLAlchemy db and Migrate
     db.init_app(app)
     migrate.init_app(app, db)
 
-    # Register Blueprints 
     app.register_blueprint(board_bp)
     app.register_blueprint(card_bp)
 

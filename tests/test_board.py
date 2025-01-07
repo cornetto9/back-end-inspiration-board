@@ -1,6 +1,5 @@
 from app.models.board import Board
 from app.db import db
-import pytest
 
 def test_get_all_boards_no_saved_boards(client):
     # Act
